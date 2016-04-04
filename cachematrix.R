@@ -12,7 +12,7 @@ makeCacheMatrix <- function(x = matrix()) {
     }
     
     get <- function() x
-    setinvrs <- function(solve) invrs <<- solve
+    setinvrs <- function(invmat) invrs <<- invmat
     getinvrs <- function() invrs
     
     list(set = set, get = get,
@@ -38,6 +38,21 @@ cacheSolve <- function(x, ...) {
     data <- x$get()
     invrs <- solve(data, ...)
     x$setinvrs(invrs)
-    invrs
+    invrs ## return the result
 }
 
+## Executing the functions
+
+my_matrix <- matrix(sample(1:9),3,3) ## 3 x 3 matrix
+
+## create makeCahceMatrix oject for my_matrix
+Mat_cached <- makeCacheMatrix(my_matrix)
+
+## pass Mat_cached to cacheSolve function to calculate or retrieve
+## inversion of my_matrix
+
+mat_invrs <- cacheSolve(Mat_cached)
+
+## print mat_invrs to check result
+my_matrix
+mat_invrs
